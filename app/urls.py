@@ -4,7 +4,7 @@ from .views import create_recipe, update_recipe, delete_recipe, view_recipe, rec
 urlpatterns = [
     path('recipes/', recipe_list),
     path('recipes/create/', create_recipe),
-    path('recipes/{recipe_id}', view_recipe),
-    path('recipes/{recipe_id}/delete/', delete_recipe),
-    path('recipes/{recipe_id}/update/', update_recipe),
+    path('recipes/<int:recipe_id>/', view_recipe),
+    path('recipes/<int:recipe_id>/delete/', delete_recipe),
+    path('recipes/<int:recipe_id>/update/', update_recipe),
 ]

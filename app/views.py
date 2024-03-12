@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from .models import Recipe
-from .serializers import RecipeSerializer
+from .serializers import RecipeSerializer, RecipeViewSerializer, RecipeCreateSerializer
 
 from .permissions import IsAdminOrReadOnly, IsAuthenticatedOrReadOnly, IsGuestOrReadOnly
 
@@ -32,12 +32,12 @@ class AdminViewSet(viewsets.ModelViewSet):
 
 
 @api_view(['GET'])
-def view_recipe(request):
+def view_recipe(request, recipe_id):
 
     if request.method == 'GET':
-        recipes = Recipe.objects.all()
+        recipe = Recipe.objects.get(pk=recipe_id)
 
-        serializer = RecipeSerializer(recipes, many=True)
+        serializer = RecipeViewSerializer(recipe)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -57,7 +57,7 @@ def create_recipe(request):
     if request.method == 'GET':
         recipes = Recipe.objects.all()
 
-        serializer = RecipeSerializer(recipes, many=True)
+        serializer = RecipeCreateSerializer(recipes, many=True)
 
         return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
 
